@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eatwell - Make The World A Tastier Place</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/shared.css" />
+    <link rel="stylesheet" href="/styles/restaurants.css" />
+    <script src="scripts/responsive.js" defer></script>
+  </head>
+  <body>
+    <header id="main-header">
+      <%- include("includes/head") %>
+    </header>
+    <aside id="mobile-drawer">
+      <%- include("includes/asider") %>
+    </aside>
+    <main>
+      <h1>Recommended restaurants</h1>
+      <p>Find your next favorite restaurants with help of our other users!</p>
+      <% if(numberOfRestaurants === 0) { %>
+        <p> Please share atleast 1 restaurant details </p>
+      <% } else { %>
+        <p> We found <%= numberOfRestaurants %> </p>
+        <form action="/restaurants" method="GET">
+          <input type="hidden" value="<%= nextOrder %>" name="order">
+          <button class="btn">Change Order</button>
+        </form>
+        <ul id="restaurants-list">
+          <% for (const rest of restaurant) { %>
+            <li class="restaurant-item">
+              <article>
+                <h2> <%=  rest.name %> </h2>
+                <div class="restaurant-meta">
+                  <p> <%= rest.cuisine %> </p>
+                  <p> <%=  rest.address %> </p>
+                </div>
+                <p> <%=  rest.description %> </p>
+                <div class="restaurant-actions">
+                  <a href="/restaurants/<%= rest.id %>">View Restaurant</a>
+                </div>
+              </article>
+            </li>
+          <% } %>
+        </ul>
+      <% } %>
+    </main>
+  </body>
+</html>
